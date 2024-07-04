@@ -1,9 +1,9 @@
-package com.etudiant.managestudent;
+package com.etudiant.managestudent.views;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class ViewAllStudent {
     @FXML
     private Label welcomeText;
 
