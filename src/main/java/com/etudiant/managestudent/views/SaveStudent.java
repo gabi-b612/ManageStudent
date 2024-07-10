@@ -1,6 +1,6 @@
 package com.etudiant.managestudent.views;
 
-import com.etudiant.managestudent.model.Student;
+import com.etudiant.managestudent.util.HttpClientUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 
 public class SaveStudent {
     public ImageView studentPicture;
@@ -21,9 +22,10 @@ public class SaveStudent {
     public TextField studentPostName;
     public TextField studentPreName;
     public TextField studentEmail;
-    public ImageView closeIcone;
+    public ImageView closeIcon;
     private boolean changePicture = false;
     private String profilePicturePath;
+    private File profilePicture;
 
     public void Submit(ActionEvent actionEvent) {
         if (studentName.getText().isEmpty() ||
@@ -41,14 +43,20 @@ public class SaveStudent {
             String postName = studentPostName.getText();
             String preName = studentPreName.getText();
             String email = studentEmail.getText();
-            String picturePath = profilePicturePath;
 
-            Student student = new Student(name, postName, preName, picturePath, email);
+            String API_URL = "http://localhost:8000/api/etudiants";
+            String response = new HttpClientUtil().sendPostRequestWithFile(API_URL,profilePicture,name,postName,preName,email);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Succes");
-            alert.setHeaderText(null);
-            alert.setContentText("Student registered successfully!");
+            if (Objects.equals(response, "Success")) {
+                alert.setTitle("Succes");
+                alert.setHeaderText(null);
+                alert.setContentText("Student registered successfully!");
+            } else {
+                alert.setTitle("Faild");
+                alert.setHeaderText(null);
+                alert.setContentText(response);
+            }
             alert.showAndWait();
         }
 
@@ -69,7 +77,7 @@ public class SaveStudent {
                 Image newImage = new Image(new FileInputStream(file));
                 studentPicture.setImage(newImage);
 
-                profilePicturePath = file.toURI().toString();
+                this.profilePicture = file;
 
                 applyRoundClipToImageView();
                 applyDropShadowEffect();

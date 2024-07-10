@@ -53,7 +53,7 @@
 
    </Pane>
 
-   <ImageView fx:id="closeIcone" onMouseClicked="#closeApplication" fitHeight="30.0" fitWidth="30.0" layoutX="976.0" layoutY="14.0" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 0);">
+   <ImageView fx:id="closeIcon" onMouseClicked="#closeApplication" fitHeight="30.0" fitWidth="30.0" layoutX="976.0" layoutY="14.0" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 0);">
       <Image url="@pictures/icons/icon-close.png" />
    </ImageView>
 
